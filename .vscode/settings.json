@@ -1,0 +1,8 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./src-tauri/Cargo.toml",
+        "./Cargo.toml",
+        "./src-schemas/Cargo.toml"
+    ],
+    "rust-analyzer.showUnlinkedFileNotification": false
+}

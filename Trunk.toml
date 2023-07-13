@@ -1,0 +1,7 @@
+[watch]
+ignore = ["src-tauri/"]
+
+[[hooks]]
+stage = "build"
+command = "sh"
+command_arguments = ["-c", "npx tailwindcss -i css/styles.css -o $TRUNK_STAGING_DIR/styles.css"]
