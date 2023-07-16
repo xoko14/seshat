@@ -1,7 +1,7 @@
-use client::ApiClient;
-use sections::{SectionMsg, Section};
+use std::panic;
+
+use sections::{SectionMsg, Section, sellers::SellersModel};
 use seed::{prelude::*, *};
-use seshat_schemas::Seller;
 
 mod glue;
 mod utils;
@@ -10,21 +10,19 @@ mod lang;
 mod sections;
 
 fn main() {
+    panic::set_hook(Box::new(console_error_panic_hook::hook));
     App::start("app", init, update, view);
 }
 
 pub struct Model {
     server_loaded: bool,
-    text: String,
-    sellers: Vec<Seller>,
     section: Section,
+    sellers_model: SellersModel,
 }
 
 #[derive(Clone)]
 pub enum Msg {
     ServerLoaded(String),
-    DataLoading,
-    DataLoaded(Vec<Seller>),
     ChangeSection(Section),
     SectionEvent(SectionMsg)
 }
@@ -40,9 +38,8 @@ fn init(_: Url, orders: &mut impl Orders<Msg>) -> Model {
 
     Model {
         server_loaded: false,
-        text: "Hello world".to_owned(),
-        sellers: Vec::new(),
-        section: Section::None
+        section: Section::None,
+        sellers_model: Default::default(),
     }
 }
 
@@ -50,15 +47,7 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
         Msg::ServerLoaded(text) => {
             model.server_loaded = true;
-            model.text = text;
         },
-        Msg::DataLoading => {
-            orders.skip().perform_cmd(async{
-                let client = ApiClient::default();
-                Msg::DataLoaded(client.get_sellers().await)
-            });
-        },
-        Msg::DataLoaded(sellers) => model.sellers = sellers,
         Msg::ChangeSection(section) => model.section = section,
         Msg::SectionEvent(msg) => sections::update(msg, model, orders),
     }

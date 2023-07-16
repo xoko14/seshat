@@ -17,6 +17,7 @@ toml = "0.7.5"
 wasm-bindgen = "0.2.87"
 wasm-bindgen-futures = "0.4.37"
 seshat_schemas = { path="./src-schemas"}
+console_error_panic_hook = "0.1.7"
 
 [profile.release]
 lto = true
