@@ -56,6 +56,22 @@
     html{
         @apply bg-gray-800;
     }
+
+    .table{
+        @apply border border-solid rounded border-collapse text-white;
+    }
+
+    .table tbody tr {
+        @apply m-0 border-t border-solid;
+    }
+
+    .table td{
+        @apply pr-5;
+    }
+
+    .table thead{
+        @apply font-bold;
+    }
 }
 
 html{

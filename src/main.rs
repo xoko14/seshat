@@ -8,6 +8,7 @@ mod utils;
 mod client;
 mod lang;
 mod sections;
+mod components;
 
 fn main() {
     panic::set_hook(Box::new(console_error_panic_hook::hook));
